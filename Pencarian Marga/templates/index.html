@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+
+<html>
+
+<!-- Mirrored from colorlib.com/etc/searchf/colorlib-search-23/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 30 Nov 2023 06:53:22 GMT -->
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="author" content="colorlib.com">
+  <style id="" media="all">
+    @font-face {
+      font-family: 'Poppins';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url(https://colorlib.com/fonts.gstatic.com/s/poppins/v20/pxiEyp8kv8JHgFVrJJfedw.ttf) format('truetype');
+    }
+
+    .result {
+      width: 100%;
+    }
+
+    @media screen and (max-width: 600px) {
+      .result {
+        width: 100%;
+      }
+    }
+
+    .result-content {
+      background-color: #f9f9f9;
+      border: 1px solid #ddd;
+      padding: 15px;
+      margin-bottom: 10px;
+    }
+
+    .error-message {
+      color: red;
+      font-weight: bold;
+    }
+  </style>
+  <link href={{url_for('static',filename='css/main.css')}} rel="stylesheet" />
+  <meta name="robots" content="noindex, follow">
+  <script
+    nonce="60405ee9-93e7-4845-801a-a5fd85d00ad1">(function (w, d) { !function (j, k, l, m) { j[l] = j[l] || {}; j[l].executed = []; j.zaraz = { deferred: [], listeners: [] }; j.zaraz.q = []; j.zaraz._f = function (n) { return async function () { var o = Array.prototype.slice.call(arguments); j.zaraz.q.push({ m: n, a: o }) } }; for (const p of ["track", "set", "debug"]) j.zaraz[p] = j.zaraz._f(p); j.zaraz.init = () => { var q = k.getElementsByTagName(m)[0], r = k.createElement(m), s = k.getElementsByTagName("title")[0]; s && (j[l].t = k.getElementsByTagName("title")[0].text); j[l].x = Math.random(); j[l].w = j.screen.width; j[l].h = j.screen.height; j[l].j = j.innerHeight; j[l].e = j.innerWidth; j[l].l = j.location.href; j[l].r = k.referrer; j[l].k = j.screen.colorDepth; j[l].n = k.characterSet; j[l].o = (new Date).getTimezoneOffset(); if (j.dataLayer) for (const w of Object.entries(Object.entries(dataLayer).reduce(((x, y) => ({ ...x[1], ...y[1] })), {}))) zaraz.set(w[0], w[1], { scope: "page" }); j[l].q = []; for (; j.zaraz.q.length;) { const z = j.zaraz.q.shift(); j[l].q.push(z) } r.defer = !0; for (const A of [localStorage, sessionStorage]) Object.keys(A || {}).filter((C => C.startsWith("_zaraz_"))).forEach((B => { try { j[l]["z_" + B.slice(7)] = JSON.parse(A.getItem(B)) } catch { j[l]["z_" + B.slice(7)] = A.getItem(B) } })); r.referrerPolicy = "origin"; r.src = "../../../cdn-cgi/zaraz/sd0d9.js?z=" + btoa(encodeURIComponent(JSON.stringify(j[l]))); q.parentNode.insertBefore(r, q) };["complete", "interactive"].includes(k.readyState) ? zaraz.init() : j.addEventListener("DOMContentLoaded", zaraz.init) }(w, d, "zarazData", "script"); })(window, document);</script>
+</head>
+
+<body>
+  <!-- Tambahkan ini di bagian atas body Anda -->
+  <div id="loading" style="display: none; position: fixed; z-index: 1000; top: 0; left: 0; height: 100%; width: 100%; background: rgba(255, 255, 255, .8) url('https://i.stack.imgur.com/FhHRx.gif') 50% 50% no-repeat;"></div>
+
+  <div class="s130">
+    <form id="searchForm" method="post">
+      <div class="inner-form">
+        <div class="input-field first-wrap">
+          <div class="svg-wrapper">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+              <path
+                d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z">
+              </path>
+            </svg>
+          </div>
+          <input id="search" type="text" name="name" placeholder="Masukkan nama dan marga" />
+        </div>
+        <div class="input-field second-wrap">
+          <button class="btn-search" type="submit">SEARCH</button>
+        </div>
+      </div>
+      <span class="info">Contoh: Ompu Raja Hutapea</span>
+    </form>
+  </div>
+  <div class="result">
+    {% if result %}
+      <div class="result-content">
+        <div>{{ result }}</div>
+        <div>{{ graph|safe }}</div>
+      </div>
+    {% elif error %}
+      <div class="error-message">
+        <p>{{ error }}</p>
+      </div>
+    {% endif %}
+  </div>
+  <script src="{{url_for('static', filename='js/extention/choices.js')}}"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'UA-23581568-13');
+  </script>
+  <script defer src="https://static.cloudflareinsights.com/beacon.min.js/v84a3a4012de94ce1a686ba8c167c359c1696973893317"
+    integrity="sha512-euoFGowhlaLqXsPWQ48qSkBSCFs3DPRyiwVu3FjR96cMPx+Fr+gpWRhIafcHwqwCqWS42RZhIudOvEI+Ckf6MA=="
+    data-cf-beacon='{"rayId":"82e12c478f4a4ac4","b":1,"version":"2023.10.0","token":"cd0b4b3a733644fc843ef0b185f98241"}'
+    crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script>
+    // Tampilkan loading saat form dikirim
+    $("#searchForm").submit(function(event) {
+      event.preventDefault();
+      $("#loading").show();  // Tampilkan loading
+
+      // lakukan request ke server di sini jika diperlukan
+      // misalnya menggunakan $.ajax atau fetch API
+
+      // Setelah selesai, sembunyikan loading dan gulir ke hasil
+      $("#loading").hide();
+      $('html,body').animate({
+        scrollTop: $(".result").offset().top},
+        'slow');  // Menggulir dengan animasi yang halus
+    });
+  </script>
+</body>
+<!-- Mirrored from colorlib.com/etc/searchf/colorlib-search-23/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 30 Nov 2023 06:53:23 GMT -->
+
+</html>
