@@ -118,20 +118,21 @@ def draw_graph(df, node=None):
     node_trace.marker.color = node_adjacencies
     node_trace.text = node_text
 
-    fig = go.Figure(data=edge_traces+[node_trace],
+    fig = go.Figure(data=edge_traces + [node_trace],
                     layout=go.Layout(
                         title='<br>Network graph made with Python',
                         titlefont_size=16,
                         showlegend=False,
                         hovermode='closest',
-                        margin=dict(b=20,l=5,r=5,t=40),
-                        annotations=[ dict(
+                        margin=dict(b=20, l=5, r=5, t=40),
+                        annotations=[dict(
                             text="Python code: <a href='https://plotly.com/ipython-notebooks/network-graphs/'> https://plotly.com/ipython-notebooks/network-graphs/</a>",
                             showarrow=False,
                             xref="paper", yref="paper",
-                            x=0.005, y=-0.002 ) ],
+                            x=0.005, y=-0.002)],
                         xaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
-                        yaxis=dict(showgrid=False, zeroline=False, showticklabels=False))
+                        yaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
+                        height=1280)  # Tinggi dalam pixel
                     )
     return fig.to_html()
 
@@ -145,10 +146,10 @@ def index():
         nodes = build_tree(df)
         matching_names = find_name(nodes, name)
         if not matching_names:
-            return render_template('index.html', error="No matching names found.")
+            return render_template('index.html', error="Tidak ada nama yang cocok.")
         node = bfs(nodes['Mula Jadi Nabolon'], matching_names[0])
         if node is not None:
-            result = f"{matching_names[0]} adalah generasi ke-{node.generation}"
+            result = f"{matching_names[0]} adalah generasi ke-{node.generation} "
             result += "\nKeturunan: " + " -> ".join(get_ancestry(node))
         else:
             result = f"{matching_names[0]} tidak ditemukan dalam pohon keluarga"

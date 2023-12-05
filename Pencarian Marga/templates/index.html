@@ -2,8 +2,6 @@
 
 <html>
 
-<!-- Mirrored from colorlib.com/etc/searchf/colorlib-search-23/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 30 Nov 2023 06:53:22 GMT -->
-
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -47,11 +45,8 @@
 </head>
 
 <body>
-  <!-- Tambahkan ini di bagian atas body Anda -->
-  <div id="loading" style="display: none; position: fixed; z-index: 1000; top: 0; left: 0; height: 100%; width: 100%; background: rgba(255, 255, 255, .8) url('https://i.stack.imgur.com/FhHRx.gif') 50% 50% no-repeat;"></div>
-
   <div class="s130">
-    <form id="searchForm" method="post">
+    <form method="post">
       <div class="inner-form">
         <div class="input-field first-wrap">
           <div class="svg-wrapper">
@@ -70,18 +65,18 @@
       <span class="info">Contoh: Ompu Raja Hutapea</span>
     </form>
   </div>
-  <div class="result">
-    {% if result %}
-      <div class="result-content">
-        <div>{{ result }}</div>
-        <div>{{ graph|safe }}</div>
-      </div>
-    {% elif error %}
-      <div class="error-message">
-        <p>{{ error }}</p>
-      </div>
-    {% endif %}
-  </div>
+<div class="result">
+  {% if result %}
+    <div class="result-content">
+      <div>{{ result }}</div>
+      <div id="graph">{{ graph|safe }}</div>
+    </div>
+  {% elif error %}
+    <div class="error-message">
+      <p>{{ error }}</p>
+    </div>
+  {% endif %}
+</div>
   <script src="{{url_for('static', filename='js/extention/choices.js')}}"></script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
   <script>
@@ -95,24 +90,16 @@
     integrity="sha512-euoFGowhlaLqXsPWQ48qSkBSCFs3DPRyiwVu3FjR96cMPx+Fr+gpWRhIafcHwqwCqWS42RZhIudOvEI+Ckf6MA=="
     data-cf-beacon='{"rayId":"82e12c478f4a4ac4","b":1,"version":"2023.10.0","token":"cd0b4b3a733644fc843ef0b185f98241"}'
     crossorigin="anonymous"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
   <script>
-    // Tampilkan loading saat form dikirim
-    $("#searchForm").submit(function(event) {
-      event.preventDefault();
-      $("#loading").show();  // Tampilkan loading
-
-      // lakukan request ke server di sini jika diperlukan
-      // misalnya menggunakan $.ajax atau fetch API
-
-      // Setelah selesai, sembunyikan loading dan gulir ke hasil
-      $("#loading").hide();
-      $('html,body').animate({
-        scrollTop: $(".result").offset().top},
-        'slow');  // Menggulir dengan animasi yang halus
-    });
+    var graphDiv = document.getElementById('graph');
+    function resizeGraph() {
+        var graph = graphDiv.children[0];
+        var width = graphDiv.offsetWidth;
+        graph.style.width = width + 'px';
+    }
+    window.addEventListener('resize', resizeGraph);
+    resizeGraph();
   </script>
 </body>
-<!-- Mirrored from colorlib.com/etc/searchf/colorlib-search-23/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 30 Nov 2023 06:53:23 GMT -->
-
 </html>
