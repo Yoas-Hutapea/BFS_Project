@@ -4,20 +4,20 @@ import networkx as nx
 import plotly.graph_objects as go
 import pydot
 from networkx.drawing.nx_pydot import graphviz_layout
-
+    
 app = Flask(__name__)
-
+    
 class Node:
     def __init__(self, name, parent=None, generation=0):
         self.name = name
         self.parent = parent
         self.children = {}
         self.generation = generation
-
+    
     def add_child(self, node):
         self.children[node.name] = node
         node.generation = self.generation + 1
-
+    
 def bfs(root, name):
     queue = [root]
     while queue:
@@ -27,14 +27,14 @@ def bfs(root, name):
         for child in node.children.values():
             queue.append(child)
     return None
-
+    
 def get_ancestry(node):
     ancestry = []
     while node is not None:
         ancestry.append(node.name)
         node = node.parent
     return ancestry[::-1]
-
+    
 def read_data(file_name):
     try:
         df = pd.read_csv(file_name)
@@ -42,7 +42,7 @@ def read_data(file_name):
     except Exception as e:
         print(f"Error reading file: {e}")
         return None
-
+    
 def build_tree(df):
     nodes = {name: Node(name) for name in df['Nama'].unique()}
     nodes['Mula Jadi Nabolon'] = Node('Mula Jadi Nabolon')  # Menambahkan 'Mula Jadi Nabolon' secara manual
@@ -51,18 +51,18 @@ def build_tree(df):
         if nodes.get(row['Ayah']):
             nodes[row['Ayah']].add_child(nodes[row['Nama']])
     return nodes
-
+    
 def find_name(nodes, name):
     matching_names = [node_name for node_name in nodes if name.lower() in node_name.lower()]
     return matching_names
-
+    
 def draw_graph(df, node=None):
     G = nx.DiGraph()
     edges = [(row['Ayah'], row['Nama']) for _, row in df.iterrows()]
     G.add_edges_from(edges)
-
+    
     pos = nx.nx_agraph.graphviz_layout(G, prog="dot")
-
+    
     edge_traces = []
     if node is not None:
         path_edges = [(get_ancestry(node)[i], get_ancestry(node)[i+1]) for i in range(len(get_ancestry(node))-1)]
@@ -87,10 +87,10 @@ def draw_graph(df, node=None):
                 hoverinfo='none',
                 mode='lines')
             edge_traces.append(edge_trace)
-
+    
     node_x = [pos[node][0] for node in G.nodes()]
     node_y = [pos[node][1] for node in G.nodes()]
-
+    
     node_trace = go.Scatter(
         x=node_x, y=node_y,
         mode='markers',
@@ -108,16 +108,16 @@ def draw_graph(df, node=None):
                 titleside='right'
             ),
             line_width=2))
-
+    
     node_adjacencies = []
     node_text = []
     for node, adjacencies in enumerate(G.adjacency()):
         node_adjacencies.append(len(adjacencies[1]))
         node_text.append(f'{adjacencies[0]}')
-
+    
     node_trace.marker.color = node_adjacencies
     node_trace.text = node_text
-
+    
     fig = go.Figure(data=edge_traces + [node_trace],
                     layout=go.Layout(
                         title='<br>Network graph made with Python',
@@ -135,7 +135,7 @@ def draw_graph(df, node=None):
                         height=1280)  # Tinggi dalam pixel
                     )
     return fig.to_html()
-
+    
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
@@ -156,6 +156,6 @@ def index():
         graph = draw_graph(df, node)
         return render_template('index.html', result=result, graph=graph)
     return render_template('index.html')
-
+    
 if __name__ == '__main__':
     app.run(debug=True)
